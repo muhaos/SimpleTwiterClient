@@ -25,10 +25,40 @@
 }
 
 
+- (void) postTweetWithText:(NSString*)text completionBlock:(void(^)(NSError* error)) block
+{
+    NSString *statusesShowEndpoint = @"https://api.twitter.com/1.1/statuses/update.json";
+    NSDictionary *params = @{@"status":text};
+    NSError *clientError;
+    
+    NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"POST" URL:statusesShowEndpoint parameters:params error:&clientError];
+    
+    [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        if (connectionError == nil) {
+
+            // saving new tweet into db
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                NSError *jsonError;
+                NSDictionary *tweetJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                ArchivedTweet* archivedTweet = [ArchivedTweet MR_createEntityInContext:localContext];
+                archivedTweet.tweetID = tweetJSON[@"id"];
+                archivedTweet.tweetData = data;
+             } completion:^(BOOL contextDidSave, NSError *error) {
+                 block(error);
+             }];
+            
+        }
+        else {
+            block(connectionError);
+        }
+        
+    }];
+}
+
+
 - (void) updateTimelineTweetsWithLastTweetID:(NSNumber*)lastTweetID completionBlock:(void(^)(NSError* error)) block
 {
-    NSLog(@"Updating tweets from id %@", lastTweetID);
-    
     NSString *statusesShowEndpoint = @"https://api.twitter.com/1.1/statuses/home_timeline.json";
     NSMutableDictionary *params = [@{@"count":[NSString stringWithFormat:@"%d", kTweetsPerPage]} mutableCopy];
     if (lastTweetID != nil) params[@"max_id"] = lastTweetID.stringValue;

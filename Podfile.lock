@@ -20,8 +20,8 @@ DEPENDENCIES:
   - MBProgressHUD
   - SDWebImage
   - SVPullToRefresh
-  - TwitterCore
-  - TwitterKit
+  - TwitterCore (= 1.8.1)
+  - TwitterKit (= 1.8.1)
   - UIActionSheet+Blocks
 
 SPEC CHECKSUMS:

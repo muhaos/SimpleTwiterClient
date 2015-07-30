@@ -17,6 +17,7 @@ static NSInteger const kTweetsPerPage = 20;
 
 - (void) updateTimelineTweetsWithLastTweetID:(NSNumber*)lastTweetID completionBlock:(void(^)(NSError* error)) block;
 
+- (void) postTweetWithText:(NSString*)text completionBlock:(void(^)(NSError* error)) block;
 
 
 @end

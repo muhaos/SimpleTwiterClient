@@ -16,16 +16,28 @@
 #import "AppDelegate.h"
 #import "TweetsStore.h"
 #import "Utils.h"
-
+#import "TableViewDismissing.h"
 
 
 static NSString * const TweetTableReuseIdentifier = @"TweetCell";
+static NSInteger const kTweetInputMinHeight = 110;
+static NSInteger const kTweetInputMaxHeight = 170;
 
 
-@interface TweetsViewController () <TWTRTweetViewDelegate>
+typedef NS_ENUM(NSInteger, TweetInputMode) {
+    TweetInputModeCompact,
+    TweetInputModeFull
+};
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@interface TweetsViewController () <TWTRTweetViewDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, TableViewDismissingDelegate>
+
+@property (weak, nonatomic) IBOutlet TableViewDismissing *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *createTweetButton;
+@property (weak, nonatomic) IBOutlet UITextView *tweetTextView;
+@property (weak, nonatomic) IBOutlet UILabel *tweetSymolsCountLabel;
+
+
 
 @property (strong, nonatomic) NSArray *tweets;
 
@@ -43,12 +55,19 @@ static NSString * const TweetTableReuseIdentifier = @"TweetCell";
 
 
 - (void) setupViews {
+    [self makeRounds:self.tweetTextView radius:5];
+    self.tweetTextView.layer.borderWidth = 1;
+    self.tweetTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     [self makeRounds:self.createTweetButton radius:5];
     // Setup tableview
     self.tableView.estimatedRowHeight = 150;
     self.tableView.rowHeight = UITableViewAutomaticDimension; // Explicitly set on iOS 8 if using automatic row height calculation
-    self.tableView.allowsSelection = NO;
+    //self.tableView.allowsSelection = NO;
     [self.tableView registerClass:[TWTRTweetTableViewCell class] forCellReuseIdentifier:TweetTableReuseIdentifier];
+    self.tableView.dismissingDelegate = self;
+    
+    self.tweetSymolsCountLabel.alpha = 0.0f;
 }
 
 
@@ -90,20 +109,87 @@ static NSString * const TweetTableReuseIdentifier = @"TweetCell";
 }
 
 
+# pragma mark - TableViewDismissingDelegate Methods
+
+
+- (void) tableViewTapped {
+    [self.tweetTextView resignFirstResponder];
+}
+
+
+# pragma mark - Compose tweet Methods
+
 
 - (IBAction)newTweetTapped:(UIButton *)sender {
-    TWTRComposer *composer = [[TWTRComposer alloc] init];
+    if (self.tweetTextView.text.length <= 0) {
+        return;
+    }
+
     __weak typeof(self) weakSelf = self;
-    [composer showFromViewController:self completion:^(TWTRComposerResult result) {
-        if (result == TWTRComposerResultCancelled) {
-        }
-        else {
+    [[TweetsStore sharedStore] postTweetWithText:self.tweetTextView.text completionBlock:^(NSError *error) {
+        if (error == nil) {
+            [weakSelf.tweetTextView resignFirstResponder];
+            weakSelf.tweetTextView.text = @"";
             [Utils showHUDWithText:@"Tweet posted." inView:weakSelf.view];
-            [weakSelf.tableView triggerPullToRefresh];
+            [weakSelf refreshTable];
+        } else {
+            [Utils showHUDWithText:@"Can't post tweet." inView:weakSelf.view];
         }
     }];
 }
 
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [self updateTweetInputView];
+}
+
+
+- (void) updateTweetInputView {
+    NSInteger left = 160 - self.tweetTextView.text.length;
+    self.tweetSymolsCountLabel.text = [NSString stringWithFormat:@"%d", left];
+    if (left < 0) {
+        self.createTweetButton.alpha = 0.6f;
+        self.createTweetButton.enabled = NO;
+        self.tweetSymolsCountLabel.textColor = [UIColor redColor];
+    } else {
+        self.createTweetButton.alpha = 1.0f;
+        self.createTweetButton.enabled = YES;
+        self.tweetSymolsCountLabel.textColor = [UIColor lightGrayColor];
+    }
+}
+
+
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    [self updateTweetInputView];
+    [self setTweetInputMode:TweetInputModeFull];
+}
+
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    [self setTweetInputMode:TweetInputModeCompact];
+}
+
+
+- (void) setTweetInputMode:(TweetInputMode)mode {
+    __weak typeof(self) weakSelf = self;
+    NSInteger height = (mode == TweetInputModeCompact ? kTweetInputMinHeight : kTweetInputMaxHeight);
+    float countAlpha = (mode == TweetInputModeCompact ? 0.0f : 1.0f);
+    [UIView animateWithDuration:0.25 animations:^{
+        weakSelf.tweetSymolsCountLabel.alpha = countAlpha;
+        weakSelf.tableView.tableHeaderView.frame = CGRectMake(0, 0, weakSelf.tableView.frame.size.width, height);
+        weakSelf.tableView.tableHeaderView = weakSelf.tableView.tableHeaderView;
+        [weakSelf.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+    }];
+    
+}
+
+
+# pragma mark - Settings Methods
 
 
 - (IBAction)settingTapped:(id)sender {
@@ -129,6 +215,7 @@ static NSString * const TweetTableReuseIdentifier = @"TweetCell";
 
 # pragma mark - UITableViewDelegate Methods
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.tweets count];
 }
@@ -139,6 +226,7 @@ static NSString * const TweetTableReuseIdentifier = @"TweetCell";
     TWTRTweet *tweet = archivedTweet.trTweet;
     
     TWTRTweetTableViewCell *cell = (TWTRTweetTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:TweetTableReuseIdentifier forIndexPath:indexPath];
+    [cell.tweetView] .style = TWTRTweetViewStyleRegular;
     [cell configureWithTweet:tweet];
     cell.tweetView.delegate = self;
     
@@ -153,6 +241,8 @@ static NSString * const TweetTableReuseIdentifier = @"TweetCell";
     return [TWTRTweetTableViewCell heightForTweet:tweet width:CGRectGetWidth(self.view.bounds)];
 }
 
+
+# pragma mark - Helper Methods
 
 - (void) makeRounds:(UIView*)v radius:(float)r
 {
