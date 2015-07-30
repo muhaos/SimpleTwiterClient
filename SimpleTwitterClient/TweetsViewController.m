@@ -17,6 +17,7 @@
 #import "TweetsStore.h"
 #import "Utils.h"
 #import "TableViewDismissing.h"
+#import "TweetDetailsViewController.h"
 
 
 static NSString * const TweetTableReuseIdentifier = @"TweetCell";
@@ -226,9 +227,9 @@ typedef NS_ENUM(NSInteger, TweetInputMode) {
     TWTRTweet *tweet = archivedTweet.trTweet;
     
     TWTRTweetTableViewCell *cell = (TWTRTweetTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:TweetTableReuseIdentifier forIndexPath:indexPath];
-    [cell.tweetView] .style = TWTRTweetViewStyleRegular;
     [cell configureWithTweet:tweet];
     cell.tweetView.delegate = self;
+    cell.tweetView.userInteractionEnabled = NO;
     
     return cell;
 }
@@ -240,6 +241,26 @@ typedef NS_ENUM(NSInteger, TweetInputMode) {
     
     return [TWTRTweetTableViewCell heightForTweet:tweet width:CGRectGetWidth(self.view.bounds)];
 }
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ArchivedTweet* archivedTweet = self.tweets[indexPath.row];
+    TWTRTweet *tweet = archivedTweet.trTweet;
+    [self performSegueWithIdentifier:@"ShowDetails" sender:tweet];
+}
+
+
+# pragma mark - Segue Methods
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ((TweetDetailsViewController*)segue.destinationViewController).trTweet = sender;
+    
+    
+}
+
+
 
 
 # pragma mark - Helper Methods

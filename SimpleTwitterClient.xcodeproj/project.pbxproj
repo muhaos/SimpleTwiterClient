@@ -22,6 +22,7 @@
 		56F359BE1B6A3E9D00CCE8F7 /* TweetsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F359BD1B6A3E9D00CCE8F7 /* TweetsStore.m */; };
 		56F359C11B6A44C200CCE8F7 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F359C01B6A44C200CCE8F7 /* Utils.m */; };
 		56F359C41B6A7A1D00CCE8F7 /* TableViewDismissing.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F359C31B6A7A1D00CCE8F7 /* TableViewDismissing.m */; };
+		56F359C71B6A911100CCE8F7 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F359C61B6A911100CCE8F7 /* TweetDetailsViewController.m */; };
 		F92E5C02F8CF65845BB4B391 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A636C6BF9964CBA59149187 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		56F359C01B6A44C200CCE8F7 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		56F359C21B6A7A1D00CCE8F7 /* TableViewDismissing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewDismissing.h; sourceTree = "<group>"; };
 		56F359C31B6A7A1D00CCE8F7 /* TableViewDismissing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewDismissing.m; sourceTree = "<group>"; };
+		56F359C51B6A911100CCE8F7 /* TweetDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsViewController.h; sourceTree = "<group>"; };
+		56F359C61B6A911100CCE8F7 /* TweetDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsViewController.m; sourceTree = "<group>"; };
 		6A636C6BF9964CBA59149187 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		945CE942889258DA38E7CC89 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		989AF876FE0C597B519723F6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,26 +121,14 @@
 		56211C191B68D7D40018CD3E /* SimpleTwitterClient */ = {
 			isa = PBXGroup;
 			children = (
-				56F359BA1B695E3300CCE8F7 /* settings-256@2x.png */,
+				56F359CC1B6A9E4400CCE8F7 /* Helpers */,
+				56F359CB1B6A9E1A00CCE8F7 /* Model */,
+				56F359CA1B6A9E1200CCE8F7 /* View */,
+				56F359C91B6A9E0B00CCE8F7 /* Controller */,
+				56F359C81B6A9DF600CCE8F7 /* Assets */,
 				56211C1E1B68D7D40018CD3E /* AppDelegate.h */,
 				56211C1F1B68D7D40018CD3E /* AppDelegate.m */,
-				56211C451B68E93D0018CD3E /* LoginViewController.h */,
-				56211C461B68E93D0018CD3E /* LoginViewController.m */,
-				56F359B11B68F36F00CCE8F7 /* TweetsViewController.h */,
-				56F359B21B68F36F00CCE8F7 /* TweetsViewController.m */,
-				56F359B71B69589700CCE8F7 /* ArchivedTweet.h */,
-				56F359B81B69589700CCE8F7 /* ArchivedTweet.m */,
-				56211C271B68D7D40018CD3E /* Main.storyboard */,
-				56211C2A1B68D7D40018CD3E /* Images.xcassets */,
-				56211C2C1B68D7D40018CD3E /* LaunchScreen.xib */,
-				56211C211B68D7D40018CD3E /* SimpleTwitterClient.xcdatamodeld */,
 				56211C1A1B68D7D40018CD3E /* Supporting Files */,
-				56F359BC1B6A3E9D00CCE8F7 /* TweetsStore.h */,
-				56F359BD1B6A3E9D00CCE8F7 /* TweetsStore.m */,
-				56F359BF1B6A44C200CCE8F7 /* Utils.h */,
-				56F359C01B6A44C200CCE8F7 /* Utils.m */,
-				56F359C21B6A7A1D00CCE8F7 /* TableViewDismissing.h */,
-				56F359C31B6A7A1D00CCE8F7 /* TableViewDismissing.m */,
 			);
 			path = SimpleTwitterClient;
 			sourceTree = "<group>";
@@ -167,6 +158,60 @@
 				56211C381B68D7D40018CD3E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		56F359C81B6A9DF600CCE8F7 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				56211C2A1B68D7D40018CD3E /* Images.xcassets */,
+				56F359BA1B695E3300CCE8F7 /* settings-256@2x.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		56F359C91B6A9E0B00CCE8F7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				56211C451B68E93D0018CD3E /* LoginViewController.h */,
+				56211C461B68E93D0018CD3E /* LoginViewController.m */,
+				56F359B11B68F36F00CCE8F7 /* TweetsViewController.h */,
+				56F359B21B68F36F00CCE8F7 /* TweetsViewController.m */,
+				56F359C51B6A911100CCE8F7 /* TweetDetailsViewController.h */,
+				56F359C61B6A911100CCE8F7 /* TweetDetailsViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		56F359CA1B6A9E1200CCE8F7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				56211C271B68D7D40018CD3E /* Main.storyboard */,
+				56211C2C1B68D7D40018CD3E /* LaunchScreen.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		56F359CB1B6A9E1A00CCE8F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				56211C211B68D7D40018CD3E /* SimpleTwitterClient.xcdatamodeld */,
+				56F359B71B69589700CCE8F7 /* ArchivedTweet.h */,
+				56F359B81B69589700CCE8F7 /* ArchivedTweet.m */,
+				56F359BC1B6A3E9D00CCE8F7 /* TweetsStore.h */,
+				56F359BD1B6A3E9D00CCE8F7 /* TweetsStore.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		56F359CC1B6A9E4400CCE8F7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				56F359BF1B6A44C200CCE8F7 /* Utils.h */,
+				56F359C01B6A44C200CCE8F7 /* Utils.m */,
+				56F359C21B6A7A1D00CCE8F7 /* TableViewDismissing.h */,
+				56F359C31B6A7A1D00CCE8F7 /* TableViewDismissing.m */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		C8B9E407EFE05D016505EC8A /* Frameworks */ = {
@@ -319,6 +364,7 @@
 				56F359B31B68F36F00CCE8F7 /* TweetsViewController.m in Sources */,
 				56F359BE1B6A3E9D00CCE8F7 /* TweetsStore.m in Sources */,
 				56F359C11B6A44C200CCE8F7 /* Utils.m in Sources */,
+				56F359C71B6A911100CCE8F7 /* TweetDetailsViewController.m in Sources */,
 				56211C231B68D7D40018CD3E /* SimpleTwitterClient.xcdatamodeld in Sources */,
 				56F359B91B69589700CCE8F7 /* ArchivedTweet.m in Sources */,
 				56211C1D1B68D7D40018CD3E /* main.m in Sources */,
