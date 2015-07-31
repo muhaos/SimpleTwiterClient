@@ -62,8 +62,8 @@ typedef NS_ENUM(NSInteger, TweetInputMode) {
     
     [self makeRounds:self.createTweetButton radius:5];
     // Setup tableview
-    self.tableView.estimatedRowHeight = 150;
-    self.tableView.rowHeight = UITableViewAutomaticDimension; // Explicitly set on iOS 8 if using automatic row height calculation
+//    self.tableView.estimatedRowHeight = 150;
+//    self.tableView.rowHeight = UITableViewAutomaticDimension; // Explicitly set on iOS 8 if using automatic row height calculation
     //self.tableView.allowsSelection = NO;
     [self.tableView registerClass:[TWTRTweetTableViewCell class] forCellReuseIdentifier:TweetTableReuseIdentifier];
     self.tableView.dismissingDelegate = self;
@@ -147,7 +147,7 @@ typedef NS_ENUM(NSInteger, TweetInputMode) {
 
 
 - (void) updateTweetInputView {
-    NSInteger left = 160 - self.tweetTextView.text.length;
+    NSInteger left = 140 - self.tweetTextView.text.length;
     self.tweetSymolsCountLabel.text = [NSString stringWithFormat:@"%d", left];
     if (left < 0) {
         self.createTweetButton.alpha = 0.6f;
@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, TweetInputMode) {
 
 - (IBAction)settingTapped:(id)sender {
     [UIActionSheet showInView:self.view
-                    withTitle:@"Setting"
+                    withTitle:@""
             cancelButtonTitle:@"Cancel"
        destructiveButtonTitle:@"Logout"
             otherButtonTitles:@[]

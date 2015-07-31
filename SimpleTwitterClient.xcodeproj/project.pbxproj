@@ -16,6 +16,7 @@
 		56211C3A1B68D7D40018CD3E /* SimpleTwitterClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56211C391B68D7D40018CD3E /* SimpleTwitterClientTests.m */; };
 		56211C441B68DD080018CD3E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 56211C431B68DD080018CD3E /* Podfile */; };
 		56211C471B68E93D0018CD3E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56211C461B68E93D0018CD3E /* LoginViewController.m */; };
+		56DFDFF11B6B716500FE3D91 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56DFDFF01B6B716500FE3D91 /* Default-568h@2x.png */; };
 		56F359B31B68F36F00CCE8F7 /* TweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F359B21B68F36F00CCE8F7 /* TweetsViewController.m */; };
 		56F359B91B69589700CCE8F7 /* ArchivedTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F359B81B69589700CCE8F7 /* ArchivedTweet.m */; };
 		56F359BB1B695E3300CCE8F7 /* settings-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F359BA1B695E3300CCE8F7 /* settings-256@2x.png */; };
@@ -52,6 +53,7 @@
 		56211C431B68DD080018CD3E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		56211C451B68E93D0018CD3E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		56211C461B68E93D0018CD3E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		56DFDFF01B6B716500FE3D91 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		56F359B11B68F36F00CCE8F7 /* TweetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetsViewController.h; sourceTree = "<group>"; };
 		56F359B21B68F36F00CCE8F7 /* TweetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetsViewController.m; sourceTree = "<group>"; };
 		56F359B71B69589700CCE8F7 /* ArchivedTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchivedTweet.h; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 		56F359C81B6A9DF600CCE8F7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				56DFDFF01B6B716500FE3D91 /* Default-568h@2x.png */,
 				56211C2A1B68D7D40018CD3E /* Images.xcassets */,
 				56F359BA1B695E3300CCE8F7 /* settings-256@2x.png */,
 			);
@@ -309,6 +312,7 @@
 				56211C2E1B68D7D40018CD3E /* LaunchScreen.xib in Resources */,
 				56211C441B68DD080018CD3E /* Podfile in Resources */,
 				56211C2B1B68D7D40018CD3E /* Images.xcassets in Resources */,
+				56DFDFF11B6B716500FE3D91 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
